@@ -25,6 +25,9 @@ class rhizo_base {
   $charge_scheme   = hiera('rhizo::charge_scheme', 'normal')
   $test_playback   = hiera('rhizo::test_playback', 'tone_stream://%(4000,250,440);loops=-1')
 
+  # Source repository urls
+  $rccn_repo_url        = hiera('rhizo::rccn_repo_url')
+
   # database
   $pgsql_db   = hiera('rhizo::pgsql_db')
   $pgsql_user = hiera('rhizo::pgsql_user')
@@ -334,7 +337,7 @@ schedule { 'repo':
       schedule => 'always',
       ensure   => latest,
       provider => git,
-      source   => 'git@dev.rhizomatica.org:rhizomatica/rccn.git',
+      source   => "${rccn_repo_url}",
       revision => 'master',
       require  => [ File['/var/rhizomatica'], Package['git'] ],
       notify   => [ Exec['locale-gen'],

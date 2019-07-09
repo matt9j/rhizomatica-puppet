@@ -114,6 +114,9 @@ rhizo::btkn:       "replace-with-token"
 rhizo::btdest:     "2222222222"
 rhizo::alert_url:  "https://api.telegram.org/bot%{hiera('rhizo::bot')}:%{hiera('rhizo::btkn')}/sendMessage?chat_id=-%{hiera('rhizo::btdest')}&text="
 
+#Repository URLs
+rhizo::rccn_repo_url:                "https://github.com/Rhizomatica/rccn.git"
+
 #SSH keys
 sshkeys::keys:
   test:
