@@ -13,6 +13,16 @@
 
 class rhizo_base::apt {
   contain "rhizo_base::apt::$operatingsystem"
+
+
+  exec { 'rhizo_base-apt-get-update':
+      command     => 'apt-get update',
+      cwd         => '/tmp',
+      path        => ['/usr/bin'],
+      require     => Class["rhizo_base::apt::$operatingsystem"],
+      subscribe   => Class["rhizo_base::apt::$operatingsystem"],
+      refreshonly => true,
+    }
 }
 
 class rhizo_base::apt::common {
@@ -120,7 +130,6 @@ class rhizo_base::apt::debian inherits rhizo_base::apt::common {
       location    => "http://download.opensuse.org/repositories/network:/osmocom:/${osmo_repo}/Debian_9.0/",
       release     => './',
       repos       => '',
-      notify      => Exec['apt_update'],
       key         => {
         'id'      => '0080689BE757A876CB7DC26962EB1A0917280DDF',
         'source'  => "http://download.opensuse.org/repositories/network:/osmocom:/${osmo_repo}/Debian_9.0/Release.key"
