@@ -116,6 +116,7 @@ rhizo::alert_url:  "https://api.telegram.org/bot%{hiera('rhizo::bot')}:%{hiera('
 
 #Repository URLs
 rhizo::rccn_repo_url:                "https://github.com/Rhizomatica/rccn.git"
+rhizo::rccn_sounds_repo_url:         "git@dev.rhizomatica.org:rhizomatica/ticac_sounds.git"
 
 #SSH keys
 sshkeys::keys:

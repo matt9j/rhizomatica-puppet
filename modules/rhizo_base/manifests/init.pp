@@ -27,6 +27,7 @@ class rhizo_base {
 
   # Source repository urls
   $rccn_repo_url        = hiera('rhizo::rccn_repo_url')
+  $rccn_sounds_repo_url = hiera('rhizo::rccn_sounds_repo_url')
 
   # database
   $pgsql_db   = hiera('rhizo::pgsql_db')

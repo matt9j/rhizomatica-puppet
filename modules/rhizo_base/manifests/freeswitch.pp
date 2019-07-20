@@ -231,7 +231,7 @@ class rhizo_base::freeswitch::common {
     schedule  => 'always',
     ensure    => latest,
     provider  => git,
-    source    => 'git@dev.rhizomatica.org:rhizomatica/ticac_sounds.git',
+    source    => "${rccn_sounds_repo_url}",
     require   => File['/root/.ssh/bsc_dev'],
   }
 
