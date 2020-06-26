@@ -13,6 +13,7 @@
 
 class rhizo_base::apt {
   contain "rhizo_base::apt::$lsbdistcodename"
+  contain "apt::update"
 }
 
 class rhizo_base::apt::common {
