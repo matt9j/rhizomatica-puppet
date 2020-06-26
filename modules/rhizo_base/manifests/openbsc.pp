@@ -69,10 +69,12 @@ class rhizo_base::openbsc {
 
   package { [ 'osmo-bsc-meas-utils' ]:
       ensure   => $utils_version,
+      require  => Class['rhizo_base::apt'],
     }
 
   package { [ 'libosmocore-utils' ]:
       ensure   => 'installed',
+      require  => Class['rhizo_base::apt'],
     }
 
   if $mncc_codec == "AMR" {
