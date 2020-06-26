@@ -50,6 +50,7 @@ class rhizo_base::packages::buster inherits rhizo_base::packages::common {
     line               => 'short_open_tag = On',
     match              => '^short_open_tag',
     append_on_no_match => false,
+    require => Package['libapache2-mod-php'],
   }
 
 }
