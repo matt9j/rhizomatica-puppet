@@ -128,5 +128,7 @@ sshkeys::users:
     keys:
       - test
 
+# Key Infrastructure
 rhizo::dev_host_key: "NULL"
 rhizo::bsc_dev_deploy_key: "NULL"
+rhizo::bts_key: "NULL"
