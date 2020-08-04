@@ -92,6 +92,9 @@ class rhizo_base::freeswitch::debian inherits rhizo_base::freeswitch::common {
 
   systemd::unit_file { 'freeswitch.service':
     source => "puppet:///modules/rhizo_base/freeswitch.service",
+    } ~>
+  service { 'freeswitch':
+    enable  => true,
     }
 
   systemd::tmpfile { 'freeswitch.tmpfile':
