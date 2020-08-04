@@ -26,20 +26,26 @@ class rhizo_base::runit {
       require => Class['rhizo_base::packages'],
     }
 
-  file { '/etc/service/osmo-nitb':
+  if $operatingsystem != 'Debian' {
+    file { '/etc/service/osmo-nitb':
       ensure  => link,
       target  => '/etc/sv/osmo-nitb',
-      require =>
-        [ File['/etc/sv'], Class['rhizo_base::openbsc'] ],
-    }
+      require => [ File['/etc/sv'], Class['rhizo_base::openbsc'] ],
+      }
 
-  if $operatingsystem != 'Debian' {
     file { '/etc/service/freeswitch':
         ensure  => link,
         target  => '/etc/sv/freeswitch',
         require =>
           [ File['/etc/sv'], Class['rhizo_base::freeswitch'] ],
       }
+
+    file { '/etc/service/osmo-sip-connector':
+        ensure  => link,
+        target  => '/etc/sv/osmo-sip-connector',
+        require => [ File['/etc/sv'] ],
+      }
+
   }
 
   file { '/etc/service/rapi':
@@ -57,12 +63,6 @@ class rhizo_base::runit {
   file { '/etc/service/esme':
       ensure  => link,
       target  => '/etc/sv/esme',
-      require => [ File['/etc/sv'] ],
-    }
-
-  file { '/etc/service/osmo-sip-connector':
-      ensure  => link,
-      target  => '/etc/sv/osmo-sip-connector',
       require => [ File['/etc/sv'] ],
     }
 
