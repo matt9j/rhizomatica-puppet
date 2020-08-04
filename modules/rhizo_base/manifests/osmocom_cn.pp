@@ -1,6 +1,7 @@
-# Class: rhizo_base::openbsc
+# Class: rhizo_base::osmocom_cn
 #
-# This module manages the OpenBSC system
+# This module manages a network-in-a-box installation of the osmocom
+# cellular core network components.
 #
 # Parameters: none
 #
@@ -10,7 +11,7 @@
 #
 # Sample Usage:
 #
-class rhizo_base::openbsc {
+class rhizo_base::osmocom_cn {
   $network_name    = $rhizo_base::network_name
   $auth_policy     = $rhizo_base::auth_policy
   $lac             = $rhizo_base::lac

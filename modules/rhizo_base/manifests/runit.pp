@@ -30,7 +30,7 @@ class rhizo_base::runit {
     file { '/etc/service/osmo-nitb':
       ensure  => link,
       target  => '/etc/sv/osmo-nitb',
-      require => [ File['/etc/sv'], Class['rhizo_base::openbsc'] ],
+      require => [ File['/etc/sv'], Class['rhizo_base::osmocom_cn'] ],
       }
 
     file { '/etc/service/freeswitch':
