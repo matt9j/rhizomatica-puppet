@@ -3,7 +3,7 @@ rhizo::mail_admins:                  "postmaster@rhizomatica.org"
 rhizo::advice_email:                 "[ 'postmaster@rhizomatica.org' ]"
 rhizo::smsc_password:                "Password"
 rhizo::rhizomatica_dir:              "/var/rhizomatica"
-rhizo::sq_hlr_path:                  "/var/lib/osmocom/hlr.sqlite3"
+rhizo::sq_hlr_path:                  "/var/lib/osmocom/hlr.db"
 rhizo::password_hash:                "$6$FM010nsT$FhByUmcQNo4snzPVfbMuTVyVrwmuzwsnsJ/CyUkk7yu7NKNA2zzTCF/UwrK6U4ZDU6KmkSNjtM0UUNBpj4GMo1"
 
 #PostgreSQL config
@@ -43,7 +43,8 @@ rhizo::kannel_username:              "rhizomatica"
 rhizo::kannel_sendsms_password:      "123abcde"
 rhizo::kannel_admin_password:        "123abcde"
 
-rhizo::sgsn_ip_address:              "172.16.0.1"
+rhizo::osmo_cn_local_ip_address:     "127.0.0.1"
+rhizo::sgsn_ip_address:              "%{alias('rhizo::ran_ip_address')}"
 rhizo::ggsn_ip_address:              "192.168.1.1"
 
 #Monthly subscription messages

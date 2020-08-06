@@ -1,0 +1,360 @@
+! osmo-bsc default configuration
+! (assumes STP to run on 127.0.0.1 and uses default point codes)
+!
+log stderr
+  logging filter all 1
+  logging color 1
+  logging print category 1
+  logging timestamp 0
+  logging print file 1
+  logging level all everything
+  logging level rll notice
+  logging level mm info
+  logging level rr notice
+  logging level rsl error
+  logging level nm notice
+  logging level pag debug
+  logging level meas notice
+  logging level msc debug
+  logging level ho notice
+  logging level ref notice
+  logging level nat notice
+  logging level ctrl notice
+  logging level filter notice
+  logging level lglobal error
+  logging level llapd notice
+  logging level linp notice
+  logging level lmux notice
+  logging level lmi notice
+  logging level lmib notice
+  logging level lsms debug
+  logging level lctrl notice
+  logging level lgtp notice
+  logging level lstats notice
+  logging level lgsup notice
+  logging level loap notice
+  logging level lss7 notice
+  logging level lsccp notice
+  logging level lsua notice
+  logging level lm3ua notice
+  logging level lmgcp notice
+!
+stats interval 5
+!
+e1_input
+ e1_line 0 driver ipa
+ e1_line 0 port 0
+ no e1_line 0 keepalive
+network
+ network country code <%= @mcc %>
+ mobile network code <%= @mnc %>
+ encryption a5 0
+ neci 1
+ paging any use tch 1
+ handover 0
+ handover algorithm 1
+ handover1 window rxlev averaging 10
+ handover1 window rxqual averaging 1
+ handover1 window rxlev neighbor averaging 10
+ handover1 power budget interval 6
+ handover1 power budget hysteresis 3
+ handover1 maximum distance 9999
+ periodic location update 30
+ timer 3109 4
+ meas-feed destination 127.0.0.1 8888
+ bts 0
+  type sysmobts
+  band <%= @gsm_band %>
+  cell_identity 0
+  location_area_code <%= @lac %>
+  base_station_id_code 63
+  ms max power <%= @ms_max_power %>
+  cell reselection hysteresis 14
+  rxlev access min 0
+  radio-link-timeout 32
+  channel allocator ascending
+  rach tx integer 9
+  rach max transmission 7
+  channel-description attach 1
+  channel-description bs-pa-mfrms 5
+  channel-description bs-ag-blks-res 1
+  early-classmark-sending forbidden
+  ipa unit-id 1000 0
+  oml ipa stream-id 255 line 0
+<% if @mncc_codec == 'AMR' -%>
+  codec-support fr amr
+  amr tch-h modes 4 5
+  amr tch-h start-mode 1
+<% else -%>
+  codec-support fr
+<% end -%>
+<% if @gprs == 'active' -%>
+  gprs mode gprs
+  gprs 11bit_rach_support_for_egprs 0
+  gprs routing area 0
+  gprs network-control-order nc0
+  gprs cell bvci 3
+  gprs cell timer blocking-timer 3
+  gprs cell timer blocking-retries 3
+  gprs cell timer unblocking-retries 3
+  gprs cell timer reset-timer 3
+  gprs cell timer reset-retries 3
+  gprs cell timer suspend-timer 10
+  gprs cell timer suspend-retries 3
+  gprs cell timer resume-timer 10
+  gprs cell timer resume-retries 3
+  gprs cell timer capability-update-timer 10
+  gprs cell timer capability-update-retries 3
+  gprs nsei <%= @lac %>1
+  gprs ns timer tns-block 3
+  gprs ns timer tns-block-retries 3
+  gprs ns timer tns-reset 3
+  gprs ns timer tns-reset-retries 3
+  gprs ns timer tns-test 30
+  gprs ns timer tns-alive 3
+  gprs ns timer tns-alive-retries 10
+  gprs nsvc 0 nsvci <%= @lac %>1
+  gprs nsvc 0 local udp port 23<%= @lac %>
+  gprs nsvc 0 remote udp port 23001
+  gprs nsvc 0 remote ip <%= @sgsn_ip_address %>
+<% else -%>
+  gprs mode none
+<% end -%>
+  trx 0
+   rf_locked 0
+   arfcn <%= @arfcn_0_A %>
+   nominal power 37
+   ! to use full TRX power, set max_power_red 0
+   max_power_red <%= @max_power_red %>
+   rsl e1 tei 0
+   timeslot 0
+    phys_chan_config CCCH
+    hopping enabled 0
+   timeslot 1
+    phys_chan_config SDCCH8
+    hopping enabled 0
+   timeslot 2
+     phys_chan_config <%= @phys_chan %>
+     hopping enabled 0
+   timeslot 3
+     phys_chan_config <%= @phys_chan %>
+     hopping enabled 0
+   timeslot 4
+     phys_chan_config <%= @phys_chan %>
+     hopping enabled 0
+   timeslot 5
+     phys_chan_config <%= @phys_chan %>
+     hopping enabled 0
+   timeslot 6
+     phys_chan_config <%= @phys_chan %>
+     hopping enabled 0
+<% if @gprs == 'active' -%>
+   timeslot 7
+     phys_chan_config PDCH
+     hopping enabled 0
+<% else -%>
+   timeslot 7
+     phys_chan_config <%= @phys_chan %>
+     hopping enabled 0
+<% end -%>
+<% if @arfcn_0_B -%>
+  trx 1
+   rf_locked 0
+   arfcn <%= @arfcn_0_B %>
+   nominal power 37
+   ! to use full TRX power, set max_power_red 0
+   max_power_red <%= @max_power_red %>
+   rsl e1 tei 0
+   timeslot 0
+    phys_chan_config CCCH
+    hopping enabled 0
+   timeslot 1
+    phys_chan_config SDCCH8
+    hopping enabled 0
+   timeslot 2
+     phys_chan_config <%= @phys_chan %>
+     hopping enabled 0
+   timeslot 3
+     phys_chan_config <%= @phys_chan %>
+     hopping enabled 0
+   timeslot 4
+     phys_chan_config <%= @phys_chan %>
+     hopping enabled 0
+   timeslot 5
+     phys_chan_config <%= @phys_chan %>
+     hopping enabled 0
+   timeslot 6
+     phys_chan_config <%= @phys_chan %>
+     hopping enabled 0
+<% if @gprs == 'active' -%>
+   timeslot 7
+     phys_chan_config PDCH
+     hopping enabled 0
+<% else -%>
+   timeslot 7
+     phys_chan_config <%= @phys_chan %>
+     hopping enabled 0
+<% end -%>
+<% end -%>
+<% if @bts1_ip_address -%>
+ bts 1
+  type sysmobts
+  band <%= @gsm_band %>
+  cell_identity 1
+  location_area_code <%= @lac %>
+  base_station_id_code 63
+  ms max power <%= @ms_max_power %>
+  cell reselection hysteresis 14
+  rxlev access min 0
+  radio-link-timeout 32
+  channel allocator ascending
+  rach tx integer 9
+  rach max transmission 7
+  channel-description attach 1
+  channel-description bs-pa-mfrms 5
+  channel-description bs-ag-blks-res 1
+  early-classmark-sending forbidden
+  ipa unit-id 1000 1
+  oml ipa stream-id 255 line 0
+<% if @mncc_codec == 'AMR' -%>
+  codec-support fr amr
+  amr tch-h modes 4 5
+  amr tch-h start-mode 1
+<% else -%>
+  codec-support fr
+<% end -%>
+<% if @gprs == 'active' -%>
+  gprs mode gprs
+  gprs 11bit_rach_support_for_egprs 0
+  gprs routing area 0
+  gprs network-control-order nc0
+  gprs cell bvci 3
+  gprs cell timer blocking-timer 3
+  gprs cell timer blocking-retries 3
+  gprs cell timer unblocking-retries 3
+  gprs cell timer reset-timer 3
+  gprs cell timer reset-retries 3
+  gprs cell timer suspend-timer 10
+  gprs cell timer suspend-retries 3
+  gprs cell timer resume-timer 10
+  gprs cell timer resume-retries 3
+  gprs cell timer capability-update-timer 10
+  gprs cell timer capability-update-retries 3
+  gprs nsei <%= @lac %>1
+  gprs ns timer tns-block 3
+  gprs ns timer tns-block-retries 3
+  gprs ns timer tns-reset 3
+  gprs ns timer tns-reset-retries 3
+  gprs ns timer tns-test 30
+  gprs ns timer tns-alive 3
+  gprs ns timer tns-alive-retries 10
+  gprs nsvc 0 nsvci <%= @lac %>1
+  gprs nsvc 0 local udp port 23<%= @lac %>
+  gprs nsvc 0 remote udp port 23001
+  gprs nsvc 0 remote ip <%= @sgsn_ip_address %>
+<% else -%>
+  gprs mode none
+<% end -%>
+  trx 0
+   rf_locked 0
+   arfcn <%= @arfcn_1_A %>
+   nominal power 37
+   ! to use full TRX power, set max_power_red 0
+   max_power_red <%= @max_power_red %>
+   rsl e1 tei 0
+   timeslot 0
+    phys_chan_config CCCH
+    hopping enabled 0
+   timeslot 1
+    phys_chan_config SDCCH8
+    hopping enabled 0
+   timeslot 2
+     phys_chan_config <%= @phys_chan %>
+     hopping enabled 0
+   timeslot 3
+     phys_chan_config <%= @phys_chan %>
+     hopping enabled 0
+   timeslot 4
+     phys_chan_config <%= @phys_chan %>
+     hopping enabled 0
+   timeslot 5
+     phys_chan_config <%= @phys_chan %>
+     hopping enabled 0
+   timeslot 6
+     phys_chan_config <%= @phys_chan %>
+     hopping enabled 0
+<% if @gprs == 'active' -%>
+   timeslot 7
+     phys_chan_config PDCH
+     hopping enabled 0
+<% else -%>
+   timeslot 7
+     phys_chan_config <%= @phys_chan %>
+     hopping enabled 0
+<% end -%>
+<% if @arfcn_1_B -%>
+  trx 1
+   rf_locked 0
+   arfcn <%= @arfcn_1_B %>
+   nominal power 37
+   ! to use full TRX power, set max_power_red 0
+   max_power_red <%= @max_power_red %>
+   rsl e1 tei 0
+   timeslot 0
+    phys_chan_config CCCH
+    hopping enabled 0
+   timeslot 1
+    phys_chan_config SDCCH8
+    hopping enabled 0
+   timeslot 2
+     phys_chan_config <%= @phys_chan %>
+     hopping enabled 0
+   timeslot 3
+     phys_chan_config <%= @phys_chan %>
+     hopping enabled 0
+   timeslot 4
+     phys_chan_config <%= @phys_chan %>
+     hopping enabled 0
+   timeslot 5
+     phys_chan_config <%= @phys_chan %>
+     hopping enabled 0
+   timeslot 6
+     phys_chan_config <%= @phys_chan %>
+     hopping enabled 0
+<% if @gprs == 'active' -%>
+   timeslot 7
+     phys_chan_config PDCH
+     hopping enabled 0
+<% else -%>
+   timeslot 7
+     phys_chan_config <%= @phys_chan %>
+     hopping enabled 0
+<% end -%>
+<% end -%>
+<% end -%>
+msc 0
+ no bsc-welcome-text
+ no bsc-msc-lost-text
+ no bsc-grace-text
+ type normal
+<% if @allow_emergency == 'allow' -%>
+ allow-emergency allow
+<% else -%>
+ allow-emergency deny
+<% end -%>
+ amr-config 12_2k forbidden
+ amr-config 10_2k forbidden
+ amr-config 7_95k forbidden
+ amr-config 7_40k forbidden
+ amr-config 6_70k forbidden
+ amr-config 5_90k allowed
+ amr-config 5_15k forbidden
+ amr-config 4_75k forbidden
+ mgw remote-ip <%= @mgw_controlplane_ip_address %>
+ mgw remote-port 2427
+ mgw local-port 2727
+ ! Supported codecs may change over time
+ codec-list fr3 fr1 hr3
+bsc
+ mid-call-timeout 0
+ no missing-msc-text

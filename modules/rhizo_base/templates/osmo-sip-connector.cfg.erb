@@ -1,5 +1,5 @@
 !
-! OsmoSIPcon (1.2.0) configuration saved from vty
+! osmo-sip-connector configuration
 !!
 !
 log stderr
@@ -12,7 +12,7 @@ log stderr
  logging level set-all notice
  logging level sip info
  logging level mncc info
- logging level app notice
+ logging level app info
  logging level call info
  logging level lglobal notice
  logging level llapd notice
@@ -24,7 +24,7 @@ log stderr
  logging level lctrl notice
  logging level lgtp notice
  logging level lstats notice
- logging level lgsup notice
+ logging level lgsup info
  logging level loap notice
  logging level lss7 notice
  logging level lsccp notice
@@ -43,5 +43,5 @@ sip
  remote <%= @mncc_ip_address %> 5060
  sofia-sip log-level 1
 mncc
- socket-path /tmp/bsc_mncc
+ socket-path /tmp/msc_mncc
 app

@@ -54,8 +54,8 @@ class rhizo_base {
   $bts_type        = hiera('rhizo::bts_type')
   $bts_amps        = hiera('rhizo::bts_amps', "on")
   $bts1_ip_address = hiera('rhizo::bts1_ip_address')
-  $arfcn_A         = hiera('rhizo::arfcn_A')
-  $arfcn_B         = hiera('rhizo::arfcn_B', false)
+  $arfcn_0_A       = hiera('rhizo::arfcn_0_A')
+  $arfcn_0_B       = hiera('rhizo::arfcn_0_B', false)
   $bts1_name       = hiera('rhizo::bts1_name', "${site_name}_1")
 
   $bts2_ip_address = hiera('rhizo::bts2_ip_address', false)
@@ -82,6 +82,7 @@ class rhizo_base {
   $mncc_ip_address = hiera('rhizo::mncc_ip_address', '172.16.0.1')
   $vpn_ip_address = hiera('rhizo::vpn_ip_address')
   $wan_ip_address = hiera('rhizo::wan_ip_address')
+  $ran_ip_address = hiera('rhizo::ran_ip_address')
   $riak_ip_address = hiera('rhizo::riak_ip_address', $vpn_ip_address)
   $sip_central_ip_address = hiera('rhizo::sip_central_ip_address')
   $webphone_prefix       = hiera('rhizo::webphone_prefix', '[]')
