@@ -598,13 +598,6 @@ schedule { 'repo':
       pkgname => 'csvkit',
     }
 
-  file { '/usr/lib/python2.7/dist-packages':
-      ensure  => directory,
-      source  => 'puppet:///modules/rhizo_base/usr/lib/python2.7/dist-packages',
-      recurse => remote,
-      require => Class['python'],
-    }
-
   file { '/etc/apcupsd/apcupsd.conf':
       ensure  => present,
       source  => 'puppet:///modules/rhizo_base/etc/apcupsd/apcupsd.conf',
