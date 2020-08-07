@@ -153,15 +153,15 @@ class rhizo_base::freeswitch::common {
     ['freeswitch' ]:
       ensure  => $lsbdistcodename ? {
         "stretch" => '1.10.3~release~15~129de34d84~buster-1~stretch+1',
-        "buster"  => '1.10.3~release~15~129de34d84~buster-1~buster+1',
+        "buster"  => '1.10.4~release~16~133fc2c870~buster-1~buster+1',
         },
       require => Class['rhizo_base::apt'],
     }
 
-  file { '/usr/lib/libfreeswitch.so.1.0.0':
-      source  => "puppet:///modules/rhizo_base/usr/lib/libfreeswitch.so.1.0.0.${lsbdistcodename}",
-      require => Package['freeswitch'],
-    }
+  # file { '/usr/lib/libfreeswitch.so.1.0.0':
+  #     source  => "puppet:///modules/rhizo_base/usr/lib/libfreeswitch.so.1.0.0.${lsbdistcodename}",
+  #     require => Package['freeswitch'],
+  #   }
 
   file { '/etc/freeswitch':
       ensure  => directory,

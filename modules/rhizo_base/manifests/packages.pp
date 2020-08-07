@@ -26,7 +26,7 @@ class rhizo_base::packages::common {
   }
 
   package { ['mosh', 'tmux', 'git', 'openvpn', 'lm-sensors', 'runit-systemd', 'sqlite3',
-            'libffi-dev', 'apcupsd', 'expect', 'gawk', 'swig', 'g++', 'tinc', 'tcpdump',
+            'libffi-dev', 'apcupsd', 'expect', 'gawk', 'g++', 'tinc', 'tcpdump',
             'sngrep', 'rrdtool', 'dnsmasq', 'joe', 'curl', 'htop', 'screen',
             'websocketd', 'fping', 'mtr-tiny', 'openssh-server', 'telnet', 'netcat-traditional',
             'python-unidecode', 'python-dateutil', 'python-yaml', 'python-formencode',
@@ -43,6 +43,12 @@ class rhizo_base::packages::buster inherits rhizo_base::packages::common {
       require => Class['rhizo_base::apt'],
     }
 
+  # Keep swig at version 3 to allow installation of python-ESL with pip.
+  package { ['swig']:
+    ensure => '3.0.12-2',
+    require => Class['rhizo_base::apt'],
+  }
+
   # FIXME: An Apache restart is required after this change.
   file_line { 'apache_php':
     ensure             => present,
@@ -57,10 +63,16 @@ class rhizo_base::packages::buster inherits rhizo_base::packages::common {
 
 class rhizo_base::packages::stretch inherits rhizo_base::packages::common {
 
-  package { ['libcdk5' ]:
+  package { ['libcdk5']:
       ensure  => installed,
       require => Class['rhizo_base::apt'],
     }
+
+  # Keep swig at version 3 to allow installation of python-ESL with pip.
+  package { ['swig']:
+    ensure => '3.0.10-1.1',
+    require => Class['rhizo_base::apt'],
+  }
 
   file { '/etc/php/7.0/apache2/php.ini':
       ensure  => present,

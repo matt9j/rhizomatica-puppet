@@ -61,7 +61,7 @@ class rhizo_base::apt::common {
 
   apt::key { 'freeswitch':
       id      => '5E098B3D18406E8E19543709BD3189F5A2B57698',
-      source  => 'https://files.freeswitch.org/repo/deb/freeswitch-1.8/fsstretch-archive-keyring.gpg',
+      source  => 'https://files.freeswitch.org/repo/deb/debian-release/fsstretch-archive-keyring.gpg',
       ensure  => refreshed
     }
 
@@ -75,7 +75,7 @@ class rhizo_base::apt::common {
 class rhizo_base::apt::buster inherits rhizo_base::apt::common {
 
   apt::source { 'freeswitch':
-      location    => 'http://files.freeswitch.org/repo/deb/freeswitch-1.8/',
+      location    => 'http://files.freeswitch.org/repo/deb/debian-release/',
       release     => 'buster',
       repos       => 'main'
     }
