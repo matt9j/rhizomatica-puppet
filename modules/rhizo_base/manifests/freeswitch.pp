@@ -234,7 +234,7 @@ class rhizo_base::freeswitch::common {
     schedule  => 'always',
     ensure    => latest,
     provider  => git,
-    source    => "${rccn_sounds_repo_url}",
+    source    => "${rhizo_base::rccn_sounds_repo_url}",
     require   => File['/root/.ssh/bsc_dev'],
   }
 
