@@ -130,15 +130,29 @@ class rhizo_base::osmocom_cn {
     require => Package['osmo-stp'],
   }
 
-  $sip_connector_version = $repo ? {
-    'latest'    => '1.3.2',
-    'nightly'   => 'latest',
-    default     => '1.3.0',
-  }
-  package {  [ 'osmo-sip-connector' ]:
-    ensure   => $sip_connector_version,
-    require  => Class['rhizo_base::apt'],
-    notify   => [ Exec['notify-nitb'] ],
+  # $sip_connector_version = $repo ? {
+  #   'latest'    => '1.4.0',
+  #   'nightly'   => 'latest',
+  #   default     => '1.4.0',
+  # }
+  # package {  [ 'osmo-sip-connector' ]:
+  #   ensure   => $sip_connector_version,
+  #   require  => Class['rhizo_base::apt'],
+  #   notify   => [ Exec['notify-nitb'] ],
+  # }
+  file { '/tmp/osmo-sip-connector_1.4.0_amd64.deb':
+    source  => 'puppet:///modules/rhizo_base/osmo-sip-connector_1.4.0_amd64.deb',
+  } ~>
+  package { [ 'osmo-sip-connector' ]:
+    # Temporarily install a local version of osmo-sip-connector until
+    # freeswitch fixes shared library contexts.
+    ensure   => installed,
+    require  => [
+      Class['rhizo_base::apt'],
+      Class['rhizo_base::freeswitch'],
+    ],
+    provider => dpkg,
+    source   => '/tmp/osmo-sip-connector_1.4.0_amd64.deb',
   }
   service { 'osmo-sip-connector':
     enable  => true,

@@ -146,17 +146,45 @@ class rhizo_base::freeswitch::common {
     'libfreeswitch1',
     'freeswitch-sounds-es-mx-maria' ]:
       ensure  => installed,
-      require => Class['rhizo_base::apt'],
+      require => [
+        Class['rhizo_base::apt'],
+        Package['libsofia-sip-ua0'],
+      ]
     }
 
-  package {
-    ['freeswitch' ]:
-      ensure  => $lsbdistcodename ? {
-        "stretch" => '1.10.3~release~15~129de34d84~buster-1~stretch+1',
-        "buster"  => '1.10.4~release~16~133fc2c870~buster-1~buster+1',
-        },
-      require => Class['rhizo_base::apt'],
-    }
+  package { ['freeswitch']:
+    ensure  => $lsbdistcodename ? {
+      "stretch" => '1.10.3~release~15~129de34d84~buster-1~stretch+1',
+      "buster"  => '1.10.4~release~16~133fc2c870~buster-1~buster+1',
+    },
+    require => [
+      Class['rhizo_base::apt'],
+      Package['libsofia-sip-ua0'],
+    ],
+  }
+
+  file { '/tmp/libsofia-sip-ua0_1.12.12-1_amd64.deb':
+    source  => 'puppet:///modules/rhizo_base/libsofia-sip-ua0_1.12.12-1_amd64.deb',
+  } ~>
+  package { ['libsofia-sip-ua0']:
+    ensure   => installed,
+    require  => Class['rhizo_base::apt'],
+    provider => dpkg,
+    source   => '/tmp/libsofia-sip-ua0_1.12.12-1_amd64.deb',
+  }
+
+  file { '/tmp/libsofia-sip-ua-glib3_1.12.12-1_amd64.deb':
+    source  => 'puppet:///modules/rhizo_base/libsofia-sip-ua-glib3_1.12.12-1_amd64.deb',
+  } ~>
+  package { ['libsofia-sip-ua-glib3']:
+    ensure   => installed,
+    require  => [
+      Class['rhizo_base::apt'],
+      Package['libsofia-sip-ua0'],
+    ],
+    provider => dpkg,
+    source   => '/tmp/libsofia-sip-ua-glib3_1.12.12-1_amd64.deb',
+  }
 
   file { '/etc/freeswitch':
       ensure  => directory,
