@@ -29,6 +29,8 @@ class rhizo_base {
   $rccn_repo_url        = hiera('rhizo::rccn_repo_url')
   $rccn_sounds_repo_url = hiera('rhizo::rccn_sounds_repo_url')
 
+  $rccn_repo_version    = hiera('rhizo::rccn_repo_version', 'master')
+
   # database
   $pgsql_db   = hiera('rhizo::pgsql_db')
   $pgsql_user = hiera('rhizo::pgsql_user')
@@ -340,7 +342,7 @@ schedule { 'repo':
       ensure   => latest,
       provider => git,
       source   => "${rccn_repo_url}",
-      revision => 'master',
+      revision => $rccn_repo_version,
       require  => [ File['/var/rhizomatica'], Package['git'] ],
       notify   => [ Exec['locale-gen'],
                     Exec['notify-freeswitch'],
